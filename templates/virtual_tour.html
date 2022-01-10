@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- use ajax to make the different containers appear and disappear as the tour 
+occurs-->
+<div id="video-container">
+    <video controls width="250">
+
+        <source src=""
+                type="video/webm">
+    
+        <source src=""
+                type="video/mp4">
+    
+        Sorry, your browser doesn't support embedded videos.
+    </video>
+</div>
+
+<div id="article-container">
+    <h1>{{ data.title }}</h1>
+    {% if data.article %}
+        <p>{{ data.article }}</p>
+    {% endif %}
+</div>
+
+<div id="images-container">
+
+</div>
+
+<div id="recipe-container">
+    {% if data.recipe %}
+        <p>{{ data.recipe }}</p>
+    {% else %}
+        <p>{{ data.preamble }}</p></br>
+        <p>Ingredients:
+            <ul>
+            {% for item in data.ingredients %}
+                 <li>{{ item }}</li>
+            {% endfor %}
+            </ul>
+        </p>
+        <p>{{ data.instructions }}</p>
+    {% endif %}
+
+</div>
+
+
+<div id="button-container">
+    <a href={{ url_for('virtual_tour') }}>
+        <input type="button" value="Next" />
+     </a>
+     
+</div>
+{% endblock %}
