@@ -29,15 +29,15 @@ def virtual_tour():
         try:
             narrative=f'static/kitchen/{kitchen[prog]}/narrative.docx'
             recipe=f'static/kitchen/{kitchen[prog]}/recipe.docx'
-            data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "recipe": retrieve_text(recipe)}
-            return render_template("virtual_tour.html", data=data, showdonationButton= False)
+            data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "recipe": retrieve_text(recipe), 'image':[""]}
+            return render_template("virtual_tour.html", data=data)
         except:
             ingredients=f'static/kitchen/{kitchen[prog]}/ingredients.docx'
             instructions=f'static/kitchen/{kitchen[prog]}/instructions.docx'
             preamble=f'static/kitchen/{kitchen[prog]}/preamble.docx'
             data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "ingredients": retrieve_text2(ingredients), "instructions":retrieve_text(instructions),
-            "preamble":retrieve_text(preamble)}
-            return render_template("virtual_tour.html", data=data, showdonationButton= False)
+            "preamble":retrieve_text(preamble), 'image':[""]}
+            return render_template("virtual_tour.html", data=data)
 
        
     else:

@@ -16,4 +16,7 @@ def retrieve_text2(pth):
         fullText.append(para.text)
     return fullText
 
+def retrieve_image(pth):
+    return ""
+
 
