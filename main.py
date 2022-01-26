@@ -25,20 +25,19 @@ def virtual_tour():
     
     if 'progress' in session and session["progress"] < len(kitchen):
         prog=session['progress']
+        session['progress']+=1
         try:
             narrative=f'static/kitchen/{kitchen[prog]}/narrative.docx'
             recipe=f'static/kitchen/{kitchen[prog]}/recipe.docx'
             data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "recipe": retrieve_text(recipe)}
-            session['progress']+=1
-            return render_template("virtual_tour.html", data=data)
+            return render_template("virtual_tour.html", data=data, showdonationButton= False)
         except:
             ingredients=f'static/kitchen/{kitchen[prog]}/ingredients.docx'
             instructions=f'static/kitchen/{kitchen[prog]}/instructions.docx'
             preamble=f'static/kitchen/{kitchen[prog]}/preamble.docx'
-            data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "ingredients": retrieve_text2(ingredients), "intructions":retrieve_text(instructions),
+            data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "ingredients": retrieve_text2(ingredients), "instructions":retrieve_text(instructions),
             "preamble":retrieve_text(preamble)}
-            session['progress']+=1
-            return render_template("virtual_tour.html", data=data)
+            return render_template("virtual_tour.html", data=data, showdonationButton= False)
 
        
     else:
@@ -53,5 +52,5 @@ def end():
     return render_template('end.html')
 
 if __name__=="__main__":
-    kitchen=['alvarado', 'deerhaven', 'oldmilton', 'redhawk','russellcreek','sdivisionst', 'wallowa']
-    app.run(port=5000, debug=True)
+    kitchen=['sdivisionst','redhawk','alvarado', 'deerhaven', 'oldmilton','russellcreek', 'wallowa']
+    app.run(port=8080, debug=True)

@@ -7,7 +7,7 @@ def retrieve_text(pth):
     fullText = []
     for para in doc.paragraphs:
         fullText.append(para.text)
-    return '\n'.join(fullText)
+    return ' '.join(fullText)
 
 def retrieve_text2(pth):
     doc=Document(pth)

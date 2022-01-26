@@ -23,23 +23,28 @@ occurs-->
     {% endif %}
 </div>
 
-<div id="images-container">
-
+<div id="slideshow-container">
+    {% if data.image %}
+        {% for i in data.image%}
+            <img src= {{ i }} style= "width:100%">
+            <div class="text">caption here</div>
+        {% endfor %}
+    {% endif %}
 </div>
 
 <div id="recipe-container">
     {% if data.recipe %}
         <p>{{ data.recipe }}</p>
     {% else %}
-        <p>{{ data.preamble }}</p></br>
-        <p>Ingredients:
+        <p>{{ data.preamble }}</p>
+        Ingredients:
             <ul>
             {% for item in data.ingredients %}
                  <li>{{ item }}</li>
             {% endfor %}
             </ul>
-        </p>
-        <p>{{ data.instructions }}</p>
+        <p>Instructions:<br>
+            {{ data.instructions }}</p>
     {% endif %}
 
 </div>
