@@ -1,5 +1,6 @@
-import os.path
+from os import listdir
 from docx import Document
+#Document is used to read .docx files and listdir is used to enumerate the content of a dir
 
 
 def retrieve_text(pth):
@@ -17,6 +18,8 @@ def retrieve_text2(pth):
     return fullText
 
 def retrieve_image(pth):
-    return ""
+    images=listdir(pth)
+    return images
 
 
+print(retrieve_image("static/kitchen/redhawk/image"))
