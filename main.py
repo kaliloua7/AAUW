@@ -27,23 +27,25 @@ def virtual_tour():
         prog=session['progress']
         session['progress']+=1
         try:
+            imagespath=f'static/kitchen/{kitchen[prog]}/image'
+            images=retrieve_image(imagespath)
+        except:
+            images=['execept case']
+        try:
             narrative=f'static/kitchen/{kitchen[prog]}/narrative.docx'
             recipe=f'static/kitchen/{kitchen[prog]}/recipe.docx'
-            data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "recipe": retrieve_text(recipe), 'image':[""]}
-            return render_template("virtual_tour.html", data=data)
+            data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "recipe": retrieve_text(recipe)}
+            return render_template("virtual_tour.html", data=data, images=images)
         except:
             ingredients=f'static/kitchen/{kitchen[prog]}/ingredients.docx'
             instructions=f'static/kitchen/{kitchen[prog]}/instructions.docx'
             preamble=f'static/kitchen/{kitchen[prog]}/preamble.docx'
             data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "ingredients": retrieve_text2(ingredients), "instructions":retrieve_text(instructions),
-            "preamble":retrieve_text(preamble), 'image':[""]}
-            return render_template("virtual_tour.html", data=data)
-
+            "preamble":retrieve_text(preamble), 'image':images}
+            return render_template("virtual_tour.html", data=data, images=images)
        
     else:
         return redirect(url_for('end'))
-    print(f"{session['progress']}")
-
     return render_template("home.html")
     
 @app.route("/end/")

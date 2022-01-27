@@ -19,7 +19,7 @@ def retrieve_text2(pth):
 
 def retrieve_image(pth):
     images=listdir(pth)
+    for i in range(0, len(images)):
+        images[i]=pth+"/"+images[i]
     return images
 
-
-print(retrieve_image("static/kitchen/redhawk/image"))

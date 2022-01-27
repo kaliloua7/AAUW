@@ -24,10 +24,10 @@ occurs-->
 </div>
 
 <div id="slideshow-container">
-    {% if data.image %}
-        {% for i in data.image%}
-            <img src= {{ i }} style= "width:100%">
-            <div class="text">caption here</div>
+    {% if images %}
+        {% for image in images %}
+            <img src= "/{{ image }}" style= "width:100%">
+            <div class="text"> caption here</div>
         {% endfor %}
     {% endif %}
 </div>
