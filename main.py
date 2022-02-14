@@ -20,17 +20,23 @@ def home():
     return render_template("home.html")
     ## else redirect to virtual_tour.html and resume virtual tour
 
-@app.route("/virtual_tour/")
-def virtual_tour():
-    
+@app.route("/virtual_tour/<string:offset>")
+def virtual_tour(offset):
+
     if 'progress' in session and session["progress"] < len(kitchen):
         prog=session['progress']
-        session['progress']+=1
+        if (offset=="next"):
+            session['progress'] += 1
+        elif offset=="previous":
+            session['progress'] += -1
+        else:
+            return render_template("home.html")
+        
         try:
             imagespath=f'static/kitchen/{kitchen[prog]}/image'
             images=retrieve_image(imagespath)
         except:
-            images=['execept case']
+            images=['except case']
         try:
             narrative=f'static/kitchen/{kitchen[prog]}/narrative.docx'
             recipe=f'static/kitchen/{kitchen[prog]}/recipe.docx'

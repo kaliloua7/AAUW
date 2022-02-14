@@ -5,14 +5,17 @@
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
+  max-width: 750px;
   position: relative;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Hide the images by default */
 .mySlides {
   display: none;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Next & previous buttons */
@@ -41,7 +44,7 @@
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
 }.dot {
-  cursor: pointer;
+  cursor: 50%;
   height: 15px;
   width: 15px;
   margin: 0 2px;
@@ -59,7 +62,16 @@
 .fade {
   -webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;  animation-name: fade;
-  animation-duration: 1.5s;
+  animation-duration: 1.0s;
+}
+.nextBtn{
+  position: absolute;
+  right: 0;
+}
+
+.donateBtn {
+  position: relative;
+  right: -550px;
 }
 
 @-webkit-keyframes fade {
@@ -77,27 +89,16 @@
 
 <!-- use ajax to make the different containers appear and disappear as the tour 
 occurs-->
-<div id="video-container">
-    <video controls width="250">
 
-        <source src=""
-                type="video/webm">
-    
-        <source src=""
-                type="video/mp4">
-    
-        Sorry, your browser doesn't support embedded videos.
-    </video>
-</div>
-
-<div id="article-container">
+<div class="article-container">
     <h1>{{ data.title }}</h1>
+    <div id="front_img"><img src="/{{ data.front }}" style="width:75%"> </div>
     {% if data.article %}
         <p>{{ data.article }}</p>
     {% endif %}
 </div>
 
-<div id="slideshow-container">
+<div class="slideshow-container">
     {% if images %}
         {% for image in images %}
             <div class="mySlides fade">
@@ -120,7 +121,7 @@ occurs-->
     {% endif %}
 </div>
 
-<div id="recipe-container">
+<div class="recipe-container">
     {% if data.recipe %}
         <p>{{ data.recipe }}</p>
     {% else %}
@@ -137,21 +138,24 @@ occurs-->
 
 </div>
 
-<div id="donationButton-container">
-    <form action="https://www.paypal.com/donate" method="post" target="_top">
-        <input type="hidden" name="business" value="4XYUCH7Q27J5J" />
-        <input type="hidden" name="no_recurring" value="0" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-        <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-    </form>
+<div class="donation-container">
+  <form class= "donateBtn" action="https://www.paypal.com/donate" method="post" target="_top">
+    <input type="hidden" name="business" value="4XYUCH7Q27J5J" />
+    <input type="hidden" name="no_recurring" value="0" />
+    <input type="hidden" name="currency_code" value="USD" />
+    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+    <img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+  </form>
 </div>
 
-<div id="nextButton-container">
-    <a href={{ url_for('virtual_tour') }}>
-        <input type="button" value="Next" />
-     </a>
-     
+
+<div class="bottom-container">
+  <a class="previousBtn" href={{ url_for('virtual_tour', offset="previous")}}>
+   <input type="button" value="Previous Kitchen" />
+  </a>
+  <a class= "nextBtn" href={{ url_for('virtual_tour', offset="next") }} >
+    <input type="button" value="Next Kitchen" />
+  </a>
 </div>
 
 {% endblock %}
