@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% block css %}
 <style>
-* {box-sizing:border-box}
-
+{box-sizing:border-box}
+body{
+  overflow-x: hidden;
+ }
 /* Slideshow container */
 .slideshow-container {
   max-width: 750px;
@@ -43,7 +45,8 @@
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
-}.dot {
+}
+.dot {
   cursor: 50%;
   height: 15px;
   width: 15px;
@@ -52,6 +55,14 @@
   border-radius: 50%;
   display: inline-block;
   transition: background-color 0.6s ease;
+}
+
+#front_img {
+  border: 1px solid #ddd; /* Gray border */
+  border-radius: 4px;  /* Rounded border */
+  padding: 5px; /* Some padding */
+  width: 250px; /* Set a small width */
+  height: auto;
 }
 
 .active, .dot:hover {
@@ -71,7 +82,6 @@
 
 .donateBtn {
   position: relative;
-  right: -550px;
 }
 
 @-webkit-keyframes fade {
@@ -85,18 +95,23 @@
 }
 </style>
 {% endblock %}
+
 {% block content %}
 
 <!-- use ajax to make the different containers appear and disappear as the tour 
 occurs-->
 
+<div><img id="front_img"src="/{{ data.front }}" style=" float: right;"></div>
+
 <div class="article-container">
-    <h1>{{ data.title }}</h1>
-    <div id="front_img"><img src="/{{ data.front }}" style="width:75%"> </div>
-    {% if data.article %}
-        <p>{{ data.article }}</p>
-    {% endif %}
+  <h1>{{ data.title }}</h1>
+  
+  {% if data.article %}
+      <p>{{ data.article }}</p>
+  {% endif %}
+
 </div>
+
 
 <div class="slideshow-container">
     {% if images %}
@@ -121,38 +136,39 @@ occurs-->
     {% endif %}
 </div>
 
-<div class="recipe-container">
-    {% if data.recipe %}
-        <p>{{ data.recipe }}</p>
-    {% else %}
-        <p>{{ data.preamble }}</p>
-        Ingredients:
-            <ul>
-            {% for item in data.ingredients %}
-                 <li>{{ item }}</li>
-            {% endfor %}
-            </ul>
-        <p>Instructions:<br>
-            {{ data.instructions }}</p>
-    {% endif %}
-
-</div>
-
-<div class="donation-container">
-  <form class= "donateBtn" action="https://www.paypal.com/donate" method="post" target="_top">
-    <input type="hidden" name="business" value="4XYUCH7Q27J5J" />
-    <input type="hidden" name="no_recurring" value="0" />
-    <input type="hidden" name="currency_code" value="USD" />
-    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-    <img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-  </form>
+<div class="recipe-container" style="margin-bottom: 100px; text-align: initial;">
+  <div id="recipe_img">
+    <img id="front_img"src="/{{ data.food }}" style=" float: right; ">
+  </div>
+  {% if data.recipe %}
+       <p>{{ data.recipe }}</p>
+  {% else %}
+      <p>{{ data.preamble }}</p>
+      Ingredients:
+        <ul>
+          {% for item in data.ingredients %}
+            <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      <p>Instructions:<br>
+      {{ data.instructions }}</p>
+  {% endif %}
 </div>
 
 
-<div class="bottom-container">
+<div class="bottom-container" style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
   <a class="previousBtn" href={{ url_for('virtual_tour', offset="previous")}}>
    <input type="button" value="Previous Kitchen" />
   </a>
+  <div class="donation-container" style="text-align: center;">
+    <form class= "donateBtn" action="https://www.paypal.com/donate" method="post" target="_top">
+      <input type="hidden" name="business" value="4XYUCH7Q27J5J" />
+      <input type="hidden" name="no_recurring" value="0" />
+      <input type="hidden" name="currency_code" value="USD" />
+      <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+      <img alt="" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+    </form>
+  </div>
   <a class= "nextBtn" href={{ url_for('virtual_tour', offset="next") }} >
     <input type="button" value="Next Kitchen" />
   </a>

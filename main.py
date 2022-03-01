@@ -15,10 +15,7 @@ app.secret_key = ''.join([random.choice(('ABCDEFGHIJKLMNOPQRSTUVXYZ' +
 @app.route("/")
 def home():
     session['progress'] = 0
-    if session['progress']>0:
-        return redirect(url_for("virtual_tour"))
     return render_template("home.html")
-    ## else redirect to virtual_tour.html and resume virtual tour
 
 @app.route("/virtual_tour/<string:offset>")
 def virtual_tour(offset):
@@ -31,23 +28,26 @@ def virtual_tour(offset):
             session['progress'] += -1
         else:
             return render_template("home.html")
+
+        imagespath=f'static/kitchen/{kitchen[prog]}/image'
+        front=''
+        food=''
+        images, front, food=retrieve_image(imagespath)
         
-        try:
-            imagespath=f'static/kitchen/{kitchen[prog]}/image'
-            images=retrieve_image(imagespath)
-        except:
-            images=['except case']
+
         try:
             narrative=f'static/kitchen/{kitchen[prog]}/narrative.docx'
             recipe=f'static/kitchen/{kitchen[prog]}/recipe.docx'
-            data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "recipe": retrieve_text(recipe)}
+            data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "recipe": retrieve_text(recipe), 'front':front, 'food': food}
+            
             return render_template("virtual_tour.html", data=data, images=images)
         except:
             ingredients=f'static/kitchen/{kitchen[prog]}/ingredients.docx'
             instructions=f'static/kitchen/{kitchen[prog]}/instructions.docx'
             preamble=f'static/kitchen/{kitchen[prog]}/preamble.docx'
             data={"title":f'kitchen @ {kitchen[prog]}' , "article": retrieve_text(narrative) , "ingredients": retrieve_text2(ingredients), "instructions":retrieve_text(instructions),
-            "preamble":retrieve_text(preamble), 'image':images}
+            "preamble":retrieve_text(preamble), 'front': front, 'food': food}
+            
             return render_template("virtual_tour.html", data=data, images=images)
        
     else:

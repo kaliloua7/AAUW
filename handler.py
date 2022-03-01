@@ -19,7 +19,14 @@ def retrieve_text2(pth):
 
 def retrieve_image(pth):
     images=listdir(pth)
+    food=''
+    front=''
     for i in range(0, len(images)):
-        images[i]=pth+"/"+images[i]
-    return images
+        if "food" in images[i]:
+            food=pth+"/"+images[i]
+        elif "front" in images[i]:
+            front=pth+"/"+images[i]
+        else:
+            images[i]=pth+"/"+images[i]
+    return images, front, food
 
